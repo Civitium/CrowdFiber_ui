@@ -1,0 +1,10 @@
+{% if campaign.enable_acknowledgment_in_template == true %}
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 text-center">
+      <img alt="Acknowledgment Image" src="{{campaign.acknowledgment_image_template}}">
+      <br>
+      {{campaign.acknowledgment_text}}
+    </div>
+  </div>
+{% endif %}
