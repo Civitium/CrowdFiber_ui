@@ -1,0 +1,40 @@
+<div class="well well-green">
+  <div id="alert_placeholder"></div>
+  <div>
+    {{search_by_address}}
+  </div>
+  <div class="hidden-xs">  
+    <hr>
+    {% if zone_progress.without_goal != 0 %}
+      <h3>
+        <strong> <span class="crowdfiber-green">{{zone_progress.without_goal}}</span> </strong>
+        {{titles.zone}} {{titles.without_goal}}
+      </h3>
+    {% endif %}
+    {% if zone_progress.with_goal != 0 %}
+      <h3>
+        <strong> <span class="crowdfiber-green">{{zone_progress.with_goal}}</span> </strong>
+        {{titles.zone}} {{titles.with_goal}}
+      </h3>
+    {% endif %}
+    {% if campaign.goal_type != 2 %}
+      <h3>
+        <strong><span class="crowdfiber-green"> {{campaign.total_backer_count}} </span> </strong>
+        {{titles.backer}} Registered
+      </h3>
+    {% endif %}
+  </div>
+  <hr>
+  {{ share_links }}
+</div>
+
+{% if campaign.enable_acknowledgment_in_template == true %}
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 text-center">
+      <img alt="Acknowledgment Image" src="{{campaign.acknowledgment_image_template}}">
+      <br>
+      {{campaign.acknowledgment_text}}
+    </div>
+  </div>
+{% endif %}
