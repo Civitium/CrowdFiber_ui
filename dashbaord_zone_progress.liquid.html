@@ -1,0 +1,65 @@
+<h3> Welcome, {{user.full_name}}!</h3>
+  {% if user.has_backing? %}
+    <br/>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>
+            {{campaign.zone_label}}
+          </th>
+          <th class="hidden-xs hidden-sm">
+            Progress
+          </th>
+          <th>Address</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+         {% for customer in customers %}
+          <tr>
+            <td class="col-md-2">
+              {{customer.zone.name}}
+            </td>
+            <td>
+              {% if customer.zone_present? && customer.show_zone_progress? %}
+                  <div class="col-md-12 hidden-xs hidden-sm">
+                    <div class="zone_progress">
+                      <div class="progress">
+                        <div aria-valuemax="{{ customer.zone.people_goal }}" aria-valuemin="0" aria-valuenow="{{customer.zone.actual_goal }}" class="progress-bar {{customer.zone.zone_progress_bar_class}}" role="progressbar" style="width: {{ customer.zone.actual_goal_percentage_rounded }}%;">
+                          <span>
+                            <strong>
+                              <div>{{customer.zone.zone_progress}}</div>
+                            </strong>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif  %}
+                <div class="col-md-3 hidden-xs hidden-sm"></div>
+            </td>
+            <td class="col-md-2">
+              {{ customer.street_address }}
+            </td>
+            <td class="col-md-3">
+                <div class="pull-right">
+                  {% for confirmation in customer.confirmations %}
+                    {% if confirmation.valid? %}
+                      <a class="btn btn-warning" data-remote="true" href="{{ confirmation.link }}">{{ confirmation.button_text }} </a>  
+                    {% endif  %}
+                  {% endfor %}
+                  <a href="{{customer.review_url}}" class="btn btn-success">Review </a>
+                  <a href="{{customer.cancel_url}}" class="btn btn-danger">Cancel</a>         
+                </div>
+              {% endfor %}
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+{% else %}
+  <br /> 
+    <a href="{{campaign.campaign_root}}">Click here to register for this campaign</a>
+  <br /> 
+  <br /> 
+{% endif  %}
