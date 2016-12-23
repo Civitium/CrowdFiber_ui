@@ -49,7 +49,7 @@
                     {% endif  %}
                   {% endfor %}
                   <a href="{{customer.review_url}}" class="btn btn-success">Review </a>
-                  <a href="{{customer.cancel_url}}" class="btn btn-danger">Cancel</a>         
+                  <a data-confirm="Are you sure?" data-method="delete" href="{{customer.cancel_url}}" rel="nofollow" class="btn btn-danger">Cancel</a>
                 </div>
               {% endfor %}
             </td>
