@@ -1,0 +1,31 @@
+<br />
+<br />
+{% for p in products %}
+<div class="row">
+  <div class="col-sm-2 col-xs-3 col-md-3">
+    <img src=" {{p.product_image_thumb}}" title="{{p.name}}" class="product-image">
+  </div>
+  <div class="col-sm-8 col-xs-9 col-md-7">
+    <h3>
+      {{p.name}}
+    </h3>
+    {{ p.description }}
+    <br /> But see I wanna say that Greg and Bailey rock.
+  </div>
+  <div class="col-sm-2 col-md-2">
+    {% if p.show_price ==  true %}
+    <div class="price-level">
+      <h4 class="crowdfiber-green">
+        Starts at
+      </h4>
+      <h2 class="crowdfiber-green">
+        <strong>
+        {{p.starts_at_friendly}}
+        </strong>
+      </h2>
+    </div>
+    {% endif %}
+  </div>
+</div>
+<hr />
+{% endfor %}
