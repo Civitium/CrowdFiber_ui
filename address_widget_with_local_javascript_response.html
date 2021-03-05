@@ -30,8 +30,6 @@ function locate_success(data, status, xhr){
   $j("#locate").prepend(JSON.stringify(data, null, 2));
   token = data.token;
   uuid = data.response.uuid;
-  parsed = json.loads(your_json)
-  print(json.dumps(parsed, indent=4, sort_keys=True))
   console.log(data.response)
 }
 
