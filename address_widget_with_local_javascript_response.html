@@ -13,10 +13,11 @@
 </head>
 
 <body>
+  <div id="locate">
   <script src="https://cdn.crowdfiber.io/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdn.crowdfiber.io/jquery/3.3.1/jquery-ui.min.js"></script>
   <script src="https://join.glofiber.com/embed/40.js"></script>
-  <div id="locate">
+  
 
   </div>
 
@@ -26,7 +27,7 @@ var token = null;
 var uuid = null; 
 
 function locate_success(data, status, xhr){
-  $j("#locate_div").prepend(JSON.stringify(data, null, 2));
+  $j("#locate").prepend(JSON.stringify(data, null, 2));
   token = data.token;
   uuid = data.response.uuid;
   parsed = json.loads(your_json)
