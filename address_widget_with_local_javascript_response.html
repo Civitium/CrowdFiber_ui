@@ -36,9 +36,9 @@ $j(".address_search_button").click(function(e){
   e.preventDefault();
   console.log("test")
   locate = { locate: {
-    address: $j("#locate_address").val,
-    unit: $j("#locate_apartment_number").val,
-    zip: $j("#locate_zip").val,
+    address: $j("#locate_address").val(),
+    unit: $j("#locate_apartment_number").val(),
+    zip: $j("#locate_zip").val(),
     service_class: 1,
   }
 }
