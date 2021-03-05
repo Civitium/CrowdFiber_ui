@@ -1,0 +1,54 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Embedded Widget with Local Event</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="Ellery Durgin">
+  <link rel="stylesheet" href="https://cdn.crowdfiber.io/bulma/0.7.1/bulma.min.css">
+  <link href="https://cdn.crowdfiber.io/jquery/3.3.1/jquery-ui.css" rel="stylesheet"></link>
+
+
+</head>
+
+<body>
+  <script src="https://cdn.crowdfiber.io/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.crowdfiber.io/jquery/3.3.1/jquery-ui.min.js"></script>
+  <script src="https://join.glofiber.com/embed/40.js"></script>
+  <div id="locate">
+
+  </div>
+
+  <script>
+    
+var token = null; 
+var uuid = null; 
+
+function locate_success(data, status, xhr){
+  $j("#locate_div").prepend(JSON.stringify(data, null, 2));
+  token = data.token;
+  uuid = data.response.uuid;
+  console.log(data.response)
+}
+
+$j(".address_search_button").click(function(e){
+  e.preventDefault();
+  console.log("test")
+  locate = { locate: {
+    address: $j("#locate_address").val,
+    unit: $j("#locate_apartment_number").val,
+    zip: $j("#locate_zip").val,
+    service_class: 1,
+  }
+}
+  $j.ajax({
+    type: "POST",
+    url: base_url + "/api/public/v1/leads",
+    data: locate,
+    success: locate_success
+  });
+})
+  </script>
+</body>
+</html>
