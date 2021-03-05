@@ -29,12 +29,13 @@ function locate_success(data, status, xhr){
   $j("#locate_div").prepend(JSON.stringify(data, null, 2));
   token = data.token;
   uuid = data.response.uuid;
+  parsed = json.loads(your_json)
+  print(json.dumps(parsed, indent=4, sort_keys=True))
   console.log(data.response)
 }
 
 $j(".address_search_button").click(function(e){
   e.preventDefault();
-  console.log("test")
   locate = { locate: {
     address: $j("#locate_address").val(),
     unit: $j("#locate_apartment_number").val(),
