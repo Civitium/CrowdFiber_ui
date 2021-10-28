@@ -403,7 +403,7 @@
                                                             <td class="mytd">
                                                                 <br />
                                                                 <p style="text-align: center;" >
-                                                                    <a class="button" href="{{ Campaign.campaign_url }}/campaigns/#{@campaign.id}/site_admin/orders/{{ Customer.id }}/edit", target="_blank"> View Order </a>
+                                                                    <a class="button" href="{{ Campaign.campaign_url }}/campaigns/{{ Campaign.slug }}/site_admin/orders/{{ Customer.id }}/edit", target="_blank"> View Order </a>
                                                                 </p>
                                                             </td>
                                                         </tr>
