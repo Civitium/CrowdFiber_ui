@@ -182,6 +182,7 @@
                                                         </tbody>
                                                     </table>
                                                     <br />
+                                                    {% unless Customer.assigned_to == blank %}
                                                     <table class="mytable">
                                                         <thead>
                                                         <tr class="mytr">
@@ -198,6 +199,7 @@
                                                         </tr>
                                                         </tbody>
                                                     </table>
+                                                    {% endunless %}
                                                     <br />
                                                     {% if Customer.order_lineitems %}
                                                         {% assign lineitems_with_no_parent_id = Customer.lineitems_with_no_parent_id %}
