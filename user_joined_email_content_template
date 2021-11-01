@@ -61,45 +61,8 @@
         display: inline-block;
         color: white;
 
-        background: {
-            % if Campaign.nav_button_color==blank %
-        }
-
-        #71bc37 {
-            % else %
-        }
-
-            {
-                {
-                Campaign.nav_button_color
-            }
-        }
-
-            {
-            % endif %
-        }
-
-        ;
-
-        border: solid {
-            % if Campaign.nav_button_color==blank %
-        }
-
-        #71bc37 {
-            % else %
-        }
-
-            {
-                {
-                Campaign.nav_button_color
-            }
-        }
-
-            {
-            % endif %
-        }
-
-        ;
+        background: {% if Campaign.nav_button_color==blank %} #71bc37 {% else %} {{ Campaign.nav_button_color }} {% endif %};
+        border: solid {% if Campaign.nav_button_color==blank %} #71bc37 {% else %} {{ Campaign.nav_button_color}} {% endif %};
         border-width: 10px 20px 8px;
         font-weight: bold;
         border-radius: 4px;
