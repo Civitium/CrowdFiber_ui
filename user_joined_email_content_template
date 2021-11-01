@@ -6,8 +6,7 @@
         border: 1px solid #ddd;
     }
 
-    .myth,
-    .mytd {
+    .myth, .mytd {
         text-align: left;
         padding: 4px;
         border: 1px solid #ddd;
@@ -16,22 +15,14 @@
     .mytr:nth-child(even) {
         background-color: #f2f2f2
     }
-
-    * {
-        margin: 0;
-        padding: 0;
-        font-size: 100%;
-        font-family: "Avenir Next", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-        line-height: 1.65;
-    }
-
+ 
     img {
         max-width: 100%;
         margin: 0 auto;
         display: block;
     }
 
-    body,
+    body, 
     .body-wrap {
         width: 100% !important;
         height: 100%;
@@ -39,10 +30,22 @@
         -webkit-font-smoothing: antialiased;
         -webkit-text-size-adjust: none;
     }
-
-    a {
-        color: #71bc37;
-        text-decoration: none;
+	a {
+      color: #71bc37;
+    }
+    .order-button a {
+      display: inline-block;
+      background: {% if Campaign.nav_button_color==blank %} #71bc37 {% else %} {{ Campaign.nav_button_color }} {% endif %};
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 120%;
+      margin: 0;
+      text-decoration: none;
+      text-transform: none;
+      padding: 10px 25px;
+      mso-padding-alt: 0px;
+      border-radius: 5px;
     }
 
     .text-center {
@@ -67,12 +70,7 @@
         border-radius: 4px;
     }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
+    h1, h2, h3, h4, h5, h6 {
         margin-bottom: 20px;
         line-height: 1.25;
     }
@@ -97,9 +95,7 @@
         font-size: 16px;
     }
 
-    p,
-    ul,
-    ol {
+    p, ul, ol {
         font-size: 16px;
         font-weight: normal;
         margin-bottom: 20px;
@@ -210,8 +206,9 @@
     {% assign check_if_hide_pricing_on_order_summary_is_false = campaign.check_if_hide_pricing_on_order_summary_is_false %}
     {% assign check_if_hide_install_pricing_on_order_summary_is_false = campaign.check_if_hide_install_pricing_on_order_summary_is_false %}
     {% for lineitem in Customer.order_lineitems %}
-        {% if forloop.length > 0 %}
-        {% if forloop.first == true %}
+    {% if forloop.length > 0 %}
+    {% if forloop.first == true %}
+    
     <h3>Order Summary</h3>
 
     <table class="mytable">
@@ -342,9 +339,7 @@
 		{% for answer in Customer.answers %}
         {% if forloop.length > 0 %}
         {% if forloop.first == true %}
-    <h3>
-        Survey Answers
-    </h3>
+    <h3>Survey Answers</h3>
     <table class="mytable">
         
         <thead>
@@ -369,9 +364,7 @@
     <br />
 		{% for accepted_term in Customer.accepted_terms %}
         {% if forloop.first == true %}
-    <h3>
-        Accepted Term(s)
-    </h3>
+    <h3>Accepted Term(s)</h3>
     <table class="mytable">
         
         <thead>
@@ -404,14 +397,9 @@
     </table>
 
     <br>
-    <table class="mytable">
-        <tr class="mytr">
-            <td class="mytd">
-                <br>
-                  <p style="text-align: center;">
-                    <a class="button" href="{{ Campaign.campaign_url }}/campaigns/{{ Campaign.slug }}/site_admin/orders/{{ Customer.id }}/edit", target="_blank"> View Order </a>
-				  </p>
-            </td>
-        </tr>
-    </table>
+      <div class="order-button">
+        <p style="text-align: center;" >
+          <a href="{{ Campaign.campaign_url }}/campaigns/{{ Campaign.slug }}/site_admin/orders/{{ Customer.id }}/edit" target="_blank"> View Order </a>
+	    </p>
+      </div>
 </body>
