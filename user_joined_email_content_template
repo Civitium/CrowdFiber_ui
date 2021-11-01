@@ -1,5 +1,4 @@
-
-      <style>
+<style>
     .mytable {
         border-collapse: collapse;
         border-spacing: 0;
@@ -61,7 +60,6 @@
     .button {
         display: inline-block;
         color: white;
-
         background: {% if Campaign.nav_button_color==blank %} #71bc37 {% else %} {{ Campaign.nav_button_color }} {% endif %};
         border: solid {% if Campaign.nav_button_color==blank %} #71bc37 {% else %} {{ Campaign.nav_button_color}} {% endif %};
         border-width: 10px 20px 8px;
@@ -158,9 +156,7 @@
 
     <!-- Message start -->
 
-    <h3>
-        A new registrant has registered on your site. Here are the details.
-    </h3>
+    <h3>A new registrant has registered on your site. Here are the details.</h3>
 
 
     <h3>Customer Summary</h3>
@@ -208,19 +204,18 @@
     </table>
     {% endunless %}
     <br />
-
-    <h3>
-        Order Summary
-    </h3>
     {% if Customer.order_lineitems %}
     {% assign lineitems_with_no_parent_id = Customer.lineitems_with_no_parent_id %}
     {% assign campaign = Customer.campaign %}
     {% assign check_if_hide_pricing_on_order_summary_is_false = campaign.check_if_hide_pricing_on_order_summary_is_false %}
     {% assign check_if_hide_install_pricing_on_order_summary_is_false = campaign.check_if_hide_install_pricing_on_order_summary_is_false %}
-    <table class="mytable">
-        {% for lineitem in Customer.order_lineitems %}
+    {% for lineitem in Customer.order_lineitems %}
         {% if forloop.length > 0 %}
         {% if forloop.first == true %}
+    <h3>Order Summary</h3>
+
+    <table class="mytable">
+        
         <thead>
             <tr class="mytr">
                 <th class="myth">
@@ -344,14 +339,14 @@
     </table>
 
     <br />
-
+		{% for answer in Customer.answers %}
+        {% if forloop.length > 0 %}
+        {% if forloop.first == true %}
     <h3>
         Survey Answers
     </h3>
     <table class="mytable">
-        {% for answer in Customer.answers %}
-        {% if forloop.length > 0 %}
-        {% if forloop.first == true %}
+        
         <thead>
             <tr class="mytr">
                 <th class="myth"> Question</th>
@@ -372,13 +367,13 @@
     </table>
 
     <br />
-
+		{% for accepted_term in Customer.accepted_terms %}
+        {% if forloop.first == true %}
     <h3>
         Accepted Term(s)
     </h3>
     <table class="mytable">
-        {% for accepted_term in Customer.accepted_terms %}
-        {% if forloop.first == true %}
+        
         <thead>
             <tr class="mytr">
                 <th class="myth">Term Request ID</th>
@@ -408,16 +403,14 @@
         {% endfor %}
     </table>
 
-    <br />
-    <table>
+    <br>
+    <table class="mytable">
         <tr class="mytr">
             <td class="mytd">
-                <br />
-                <p style="text-align: center;">
-                    <a class="button"
-                        href="{{ Campaign.campaign_url }}/campaigns/{{ Campaign.slug }}/site_admin/orders/{{ Customer.id }}/edit"
-                        , target="_blank"> View Order </a>
-                </p>
+                <br>
+                  <p style="text-align: center;">
+                    <a class="button" href="{{ Campaign.campaign_url }}/campaigns/{{ Campaign.slug }}/site_admin/orders/{{ Customer.id }}/edit", target="_blank"> View Order </a>
+				  </p>
             </td>
         </tr>
     </table>
