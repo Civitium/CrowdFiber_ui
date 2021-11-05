@@ -300,7 +300,7 @@
 
 
             {% if check_if_hide_pricing_on_order_summary_is_false %}
-            {% if Customer.order_monthly_discount.positive? %}
+            {% if Customer.order_monthly_discount > 0 %}
             <tr class="mytr">
                 <td class="mytd">
                     Monthly Discount
