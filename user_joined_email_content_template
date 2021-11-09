@@ -165,6 +165,7 @@
                 <th class="myth"> Phone</th>
                 <th class="myth"> Zone</th>
                 <th class="myth"> Order ID</th>
+		<th class="myth"> MarketD</th>
             </tr>
         </thead>
         <tbody>
@@ -176,6 +177,7 @@
                 <td class="mytd">{{ Customer.phone_number }}</td>
                 <td class="mytd">{{ Customer.zone_name }}</td>
                 <td class="mytd">{{ Customer.id }}</td>
+		<td class="mytd">{{ Customer.service_class_name }}</td>
             </tr>
         </tbody>
     </table>
