@@ -15,7 +15,7 @@
     .mytr:nth-child(even) {
         background-color: #f2f2f2
     }
- 
+
     img {
         max-width: 100%;
         margin: 0 auto;
@@ -30,22 +30,22 @@
         -webkit-font-smoothing: antialiased;
         -webkit-text-size-adjust: none;
     }
-	a {
-      color: #71bc37;
+    a {
+    color: #71bc37;
     }
     .order-button a {
-      display: inline-block;
-      background: {% if Campaign.nav_button_color==blank %} #71bc37 {% else %} {{ Campaign.nav_button_color }} {% endif %};
-      color: #ffffff;
-      font-size: 16px;
-      font-weight: bold;
-      line-height: 120%;
-      margin: 0;
-      text-decoration: none;
-      text-transform: none;
-      padding: 10px 25px;
-      mso-padding-alt: 0px;
-      border-radius: 5px;
+    display: inline-block;
+    background: {% if Campaign.nav_button_color==blank %} #71bc37 {% else %} {{ Campaign.nav_button_color }} {% endif %};
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 120%;
+    margin: 0;
+    text-decoration: none;
+    text-transform: none;
+    padding: 10px 25px;
+    mso-padding-alt: 0px;
+    border-radius: 5px;
     }
 
     .text-center {
@@ -147,7 +147,7 @@
         font-weight: bold;
     }
 </style>
-
+  
 <body>
 
     <!-- Message start -->
@@ -165,7 +165,7 @@
                 <th class="myth"> Phone</th>
                 <th class="myth"> Zone</th>
                 <th class="myth"> Order ID</th>
-		<th class="myth"> Market</th>
+                <th class="myth"> Market</th>
             </tr>
         </thead>
         <tbody>
@@ -177,7 +177,7 @@
                 <td class="mytd">{{ Customer.phone_number }}</td>
                 <td class="mytd">{{ Customer.zone_name }}</td>
                 <td class="mytd">{{ Customer.id }}</td>
-		<td class="mytd">{{ Customer.service_class_name }}</td>
+                <td class="mytd">{{ Customer.service_class_name }}</td>
             </tr>
         </tbody>
     </table>
@@ -194,194 +194,219 @@
             <tr class="mytr">
                 <td class="mytd">{{ Customer.assigned_to.full_name }}</td>
                 <td class="mytd">
-                    <a
-                        href="mailto:{{ Customer.assigned_to.email_address }}">{{ Customer.assigned_to.email_address }}</a>
+                    <a href="mailto:{{ Customer.assigned_to.email_address }}">{{ Customer.assigned_to.email_address }}</a>
                 </td>
             </tr>
         </tbody>
     </table>
     {% endunless %}
     <br />
+
     {% if Customer.order_lineitems %}
-    {% assign lineitems_with_no_parent_id = Customer.lineitems_with_no_parent_id %}
-    {% assign campaign = Customer.campaign %}
-    {% assign check_if_hide_pricing_on_order_summary_is_false = campaign.check_if_hide_pricing_on_order_summary_is_false %}
-    {% assign check_if_hide_install_pricing_on_order_summary_is_false = campaign.check_if_hide_install_pricing_on_order_summary_is_false %}
-    {% for lineitem in Customer.order_lineitems %}
-    {% if forloop.length > 0 %}
-    {% if forloop.first == true %}
-    
-    <h3>Order Summary</h3>
-
-    <table class="mytable">
+        {% assign lineitems_with_no_parent_id = Customer.lineitems_with_no_parent_id %}
+        {% assign campaign = Customer.campaign %}
+        {% assign check_if_hide_pricing_on_order_summary_is_false = campaign.check_if_hide_pricing_on_order_summary_is_false %}
+        {% assign check_if_hide_install_pricing_on_order_summary_is_false = campaign.check_if_hide_install_pricing_on_order_summary_is_false %}
+            
+        {% for lineitem in Customer.order_lineitems %}
+            {% if forloop.length > 0 %}
+                {% if forloop.first == true %}
+                    <h3>Order Summary</h3>
+                
+                    <table class="mytable">
+                        <thead>
+                            <tr class="mytr">
+                                <th class="myth">
+                                    Description
+                                </th>
         
-        <thead>
-            <tr class="mytr">
-                <th class="myth">
-                    Description
-                </th>
+                        {% if Customer.order_monthly_total and campaign.check_if_hide_pricing_on_order_summary_is_false == true%}
+                            <th class="myth"> Monthly </th>
 
-                {% if campaign.check_if_hide_pricing_on_order_summary_is_false %}
-                <th class="myth"> Monthly </th>
-                {% if Customer.order_install_discount.positive? and campaign.check_if_hide_install_pricing_on_order_summary_is_false == true %}
-                <th class="myth"> Installation </th>
-                {% endif %}
-                {% endif %}
-            </tr>
-        </thead>
-        {% endif %}
+                        {% endif %}
 
+                        {% if Customer.order_install_total and campaign.check_if_hide_install_pricing_on_order_summary_is_false == true %}
+                            <th class="myth"> Installation </th>
+                        {% endif %}
+                        </tr>
+                    </thead>
+                {% endif %}
+                <tbody style>
+                    <tr class="mytr">
+                        {% unless lineitem.parent_id? == true %}
+                            <td class="mytd">
+                                {{ lineitem.name }}
+                            </td>
+                        
+                            {% if check_if_hide_pricing_on_order_summary_is_false == true %}
+                                {% if lineitem.charge == true %}
+                                    <td class="myth">
+                                        {% if lineitem.monthly_price.cents  > 0 %}
+                                            {{ lineitem.monthly_price.currency_and_amount }}
+                                        {% else %}
+                                            $0.00
+                                        {% endif %}
+                                    </td>
+                                {% else %}
+                                    <td class="mytd">
+                                        Included
+                                    </td>
+                                {% endif %}
+                            {% endif %}
+                        
+                            {% if check_if_hide_install_pricing_on_order_summary_is_false == true %}
+                                {% if lineitem.charge == true %}
+                                    <td class="mytd">
+                                        {% if lineitem.install_price.cents > 0 %}
+                                            {{ lineitem.install_price.currency_and_amount }}
+                                        {% else %}
+                                            $0.00
+                                        {% endif %}
+                                    </td>
+                                {% else %}
+                                    <td class="mytd">
+                                        Included
+                                    </td>
+                                {% endif %}
+                            {% endif %}
+                        {% endunless %}
 
-        <tbody style>
+                        {% for child in lineitem.children %}
+                            <tr class="mytr">
+                                <td class="mytd">
+                                    {% if child.parent_id? %}
+                                        +
+                                    {% endif %}
+                                    {{ child.name }}
+                                </td>
+                                {% if child.charge %}
+                                    {% if check_if_hide_pricing_on_order_summary_is_false == true %}
+                                        <td class="mytd">
+                                            {% if child.monthly_price.cents > 0 %}
+                                                {{ child.monthly_price.currency_and_amount }}
+                                            {% else %}
+                                                $0.00
+                                            {% endif %}
+                                        </td>
+                                    {% endif %}
 
-            <tr class="mytr">
-                <td class="mytd">
-                    {% if lineitem.parent_id %}
-                    +
-                    {% endif %}
-                    {{ lineitem.name }}
-                </td>
+                                    {% if check_if_hide_install_pricing_on_order_summary_is_false == true %}
+                                        <td class="mytd">
+                                            {% if child.install_price.cents > 0 %}
+                                                {{ child.install_price.currency_and_amount }}
+                                            {% else %}
+                                                $0.00
+                                            {% endif %}
+                                        </td>
+                                    {% endif %}
+                                {% else %}
+                                    <td class="mytd">
+                                        Included
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
 
-                {% if check_if_hide_pricing_on_order_summary_is_false %}
-                {% if lineitem.charge == true %}
-                <td class="myth">
-                    {{ lineitem.monthly_price.currency_and_amount }}
-                </td>
-                {% else %}
-                <td class="mytd">
-                    Included
-                </td>
-                {% endif %}
+                        {% if check_if_hide_pricing_on_order_summary_is_false == true %}
+                            {% if Customer.order_monthly_discount.cents > 0 %}
+                                <tr class="mytr">
+                                    {% for prod_discount in Customer.product_discounts %}
+                                        {% if prod_discount.product_id == lineitem.product_id %}
+                                            <td class="mytd">
+                                                Monthly Discount
+                                            </td>
+                                        
+                                            <td class="mytd">
+                                                - {{ prod_discount.amount }}
+                                            </td>
 
-                {% if Customer.install_discount.positive? and check_if_hide_install_pricing_on_order_summary_is_false == true %}
-                {% if lineitem.charge == true %}
-                <td class="mytd">
-                    {{ lineitem.install_price.currency_and_amount }}
-                </td>
-                {% else %}
-                <td class="mytd">
-                    Included
-                </td>
-                {% endif %}
-                {% endif %}
-                {% endif %}
+                                            <td class="mytd">
+                                                $0.00
+                                            </td>
+                                        {% endif %}
+                                    {% endfor %} 
 
-                {% for child in lineitem.children %}
-            <tr class="mytr">
-                <td class="mytd">
-                    {% if child.parent_id %}
-                    +
-                    {% endif %}
-                    {{ lineitem.name }}
-                </td>
-                {% if check_if_hide_pricing_on_order_summary_is_false %}
-                {% if child.charge %}
-                <td class="mytd">
-                    {{ lineitem.monthly_price.currency_and_amount }}
-                </td>
-                {% else %}
-                <td class="mytd">
-                    Included
-                </td>
-                {% endif %}
+                                    {% if Customer.order_install_discount.cents > 0 and check_if_hide_install_pricing_on_order_summary_is_false == true %}
+                                        {% for prod_discount in Customer.product_discounts %}
+                                            {% if prod_discount.product_id == lineitem.product_id %}
+                                                <td class="mytd">
+                                                    Install Discount
+                                                </td>
+                                            
+                                                <td class="mytd">
+                                                    - {{ prod_discount.amount }}
+                                                </td>
 
-                {% if Customer.install_discount.positive? and check_if_hide_install_pricing_on_order_summary_is_false == true %}
-                {% if lineitem.charge %}
-                <td class="mytd">
-                    {{ lineitem.install_price.currency_and_amount }}
-                </td>
-                {% else %}
-                <td class="mytd">
-                    Included
-                </td>
-                {% endif %}
-                {% endif %}
-                {% endif %}
-                {% endfor %}
-            </tr>
-
-
-            {% if check_if_hide_pricing_on_order_summary_is_false %}
-            {% if Customer.order_monthly_discount > 0 %}
-            <tr class="mytr">
-                <td class="mytd">
-                    Monthly Discount
-                </td>
-                <td class="mytd">
-                    - {{ Customer.order_install_discount.currency_and_amount }}
-                </td>
-                {% if Customer.order_install_discount.positive? and check_if_hide_install_pricing_on_order_summary_is_false == true %}
-                <td class="mytd">
-                    Installation Discount
-                </td>
-                <td class="mytd">
-                    - {{ Customer.order_install_discount.currency_and_amount }}
-                </td>
-                {% endif %}
-            </tr>
+                                                <td class="mytd">
+                                                    $0.00
+                                                </td>
+                                            {% endif %}
+                                        {% endfor %} 
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                        {% endif %}
+                    </tr>
+                </tbody>
             {% endif %}
-            {% endif %}
-        </tbody>
-        {% endif %}
         {% endfor %}
-    </table>
+        </table>
     {% endif %}
-
+  
     <table>
-        {% if Customer.order_monthly_total.positive? or Customer.order_install_total.positive? %}
-        {% if Campaign.check_if_hide_pricing_on_order_summary_is_false %}
-        Monthly Total: {{ Customer.order_monthly_total.currency_and_amount }}
-        <br />
-        Installation Total: {{ Customer.order_install_total.currency_and_amount  }}
+        {% if Customer.order_monthly_total.cents > 0 or Customer.order_install_total.cents > 0 %}
+            {% if Campaign.check_if_hide_pricing_on_order_summary_is_false == true%}
+                Monthly Total: {{ Customer.order_monthly_total.currency_and_amount }}
+                <br />
+                Installation Total: {{ Customer.order_install_total.currency_and_amount  }}
+            {% endif %}
         {% endif %}
-        {% endif %}
-    </table>
 
     <br />
-		{% for answer in Customer.answers %}
-        {% if forloop.length > 0 %}
-        {% if forloop.first == true %}
-    <h3>Survey Answers</h3>
-    <table class="mytable">
-        
-        <thead>
-            <tr class="mytr">
-                <th class="myth"> Question</th>
-                <th class="myth"> Answer</th>
-            </tr>
-        </thead>
-        {% endif %}
-        <tbody>
-            {% if answer.question.active %}
-            <tr class="mytr">
-                <td class="mytd">{{ answer.question.question_text }}</td>
-                <td class="mytd">{{ answer.answer_text }}</td>
-            </tr>
+    <br />
+    
+        {% for answer in Customer.answers %}
+            {% if forloop.length > 0 %}
+                {% if forloop.first == true %}
+                    <h3>Survey Answers</h3>
+                    <table class="mytable">
+                        <thead>
+                            <tr class="mytr">
+                                <th class="myth"> Question</th>
+                                <th class="myth"> Answer</th>
+                            </tr>
+                        </thead>
+                {% endif %}
+                <tbody>
+                    {% if answer.question.active %}
+                        <tr class="mytr">
+                            <td class="mytd">{{ answer.question.question_text }}</td>
+                            <td class="mytd">{{ answer.answer_text }}</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
             {% endif %}
-        </tbody>
-        {% endif %}
         {% endfor %}
     </table>
-
+  
     <br />
-		{% for accepted_term in Customer.accepted_terms %}
+    {% for accepted_term in Customer.accepted_terms %}
         {% if forloop.first == true %}
-    <h3>Accepted Term(s)</h3>
-    <table class="mytable">
-        
-        <thead>
-            <tr class="mytr">
-                <th class="myth">Term Request ID</th>
-                <th class="myth">Term</th>
-                <th class="myth">Content</th>
-                <th class="myth">IP Address</th>
-                <th class="myth">Browser</th>
-                <th class="myth">Signature</th>
-                <th class="myth">Accepted On</th>
-            </tr>
-        </thead>
+            <h3>Accepted Term(s)</h3>
+            <table class="mytable">
+                <thead>
+                    <tr class="mytr">
+                        <th class="myth">Term Request ID</th>
+                        <th class="myth">Term</th>
+                        <th class="myth">Content</th>
+                        <th class="myth">IP Address</th>
+                        <th class="myth">Browser</th>
+                        <th class="myth">Signature</th>
+                        <th class="myth">Accepted On</th>
+                    </tr>
+                </thead>
         {% endif %}
-
+  
         <tbody>
             <tr class="mytr">
                 <td class="mytd">{{ accepted_term.id }}</td>
@@ -394,14 +419,13 @@
                 </td>
                 <td class="mytd">{{ accepted_term.accepted_at }}</td>
             </tr>
-        </tbody>
-        {% endfor %}
+        </tbody>    
+    {% endfor %}
     </table>
-
     <br>
-      <div class="order-button">
+    <div class="order-button">
         <p style="text-align: center;" >
-          <a href="{{ Campaign.campaign_url }}/campaigns/{{ Campaign.slug }}/site_admin/orders/{{ Customer.id }}/edit" target="_blank"> View Order </a>
-	    </p>
-      </div>
+        <a href="{{ Campaign.campaign_url }}/campaigns/{{ Campaign.slug }}/site_admin/orders/{{ Customer.id }}/edit" target="_blank"> View Order </a>
+        </p>
+    </div>
 </body>
