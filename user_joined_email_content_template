@@ -317,7 +317,7 @@
                                             </td>
                                         
                                             <td class="mytd">
-                                                - {{ prod_discount.amount }}
+                                                - {{ prod_discount.currency_and_amount }}
                                             </td>
 
                                             <td class="mytd">
@@ -334,7 +334,7 @@
                                                 </td>
                                             
                                                 <td class="mytd">
-                                                    - {{ prod_discount.amount }}
+                                                    - {{ prod_discount.currency_and_amount }}
                                                 </td>
 
                                                 <td class="mytd">
@@ -364,7 +364,7 @@
 
     <br />
     <br />
-    
+
         {% for answer in Customer.answers %}
             {% if forloop.length > 0 %}
                 {% if forloop.first == true %}
