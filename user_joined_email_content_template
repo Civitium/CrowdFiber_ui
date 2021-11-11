@@ -177,7 +177,7 @@
                 <td class="mytd">{{ Customer.phone_number }}</td>
                 <td class="mytd">{{ Customer.zone_name }}</td>
                 <td class="mytd">{{ Customer.id }}</td>
-                <td class="mytd">{{ Customer.service_class_name }}</td>
+                <td class="mytd">{{ Customer.market_name }}</td>
             </tr>
         </tbody>
     </table>
