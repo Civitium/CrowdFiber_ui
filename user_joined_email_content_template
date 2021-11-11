@@ -270,7 +270,6 @@
                                 {% endif %}
                             {% endif %}
                         {% endunless %}
-
                         {% for child in lineitem.children %}
                             <tr class="mytr">
                                 <td class="mytd">
@@ -289,7 +288,6 @@
                                             {% endif %}
                                         </td>
                                     {% endif %}
-
                                     {% if check_if_hide_install_pricing_on_order_summary_is_false == true %}
                                         <td class="mytd">
                                             {% if child.install_price.cents > 0 %}
@@ -306,46 +304,42 @@
                                 {% endif %}
                             </tr>
                         {% endfor %}
-
-                        {% if check_if_hide_pricing_on_order_summary_is_false == true %}
-                            {% if Customer.order_monthly_discount.cents > 0 %}
+                        {% for prod_discount in Customer.product_discounts %}
+                            {% if Customer.order_monthly_discount.cents > 0 and check_if_hide_pricing_on_order_summary_is_false == true %}
                                 <tr class="mytr">
-                                    {% for prod_discount in Customer.product_discounts %}
-                                        {% if prod_discount.product_id == lineitem.product_id %}
-                                            <td class="mytd">
-                                                Monthly Discount
-                                            </td>
-                                        
-                                            <td class="mytd">
-                                                - {{ prod_discount.currency_and_amount }}
-                                            </td>
+                                    {% if prod_discount.product_id == lineitem.product_id and prod_discount.discount_type == 0 %}
+                                        <td class="mytd">
+                                            - Monthly Discount
+                                        </td>
+                                    
+                                        <td class="mytd">
+                                            - {{ prod_discount.currency_and_amount }}
+                                        </td>
 
-                                            <td class="mytd">
-                                                $0.00
-                                            </td>
-                                        {% endif %}
-                                    {% endfor %} 
-
-                                    {% if Customer.order_install_discount.cents > 0 and check_if_hide_install_pricing_on_order_summary_is_false == true %}
-                                        {% for prod_discount in Customer.product_discounts %}
-                                            {% if prod_discount.product_id == lineitem.product_id %}
-                                                <td class="mytd">
-                                                    Install Discount
-                                                </td>
-                                            
-                                                <td class="mytd">
-                                                    - {{ prod_discount.currency_and_amount }}
-                                                </td>
-
-                                                <td class="mytd">
-                                                    $0.00
-                                                </td>
-                                            {% endif %}
-                                        {% endfor %} 
+                                        <td class="mytd">
+                                            $0.00
+                                        </td>
                                     {% endif %}
                                 </tr>
                             {% endif %}
-                        {% endif %}
+                            {% if Customer.order_install_discount.cents > 0 and check_if_hide_install_pricing_on_order_summary_is_false == true %}
+                                <tr class="mytr"></tr>
+                                    {% if prod_discount.product_id == lineitem.product_id and prod_discount.discount_type == 1 %}
+                                        <td class="mytd">
+                                            - Install Discount
+                                        </td>
+                                    
+                                        <td class="mytd">
+                                            $0.00
+                                        </td>
+
+                                        <td class="mytd">
+                                            - {{ prod_discount.currency_and_amount }}
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %} 
                     </tr>
                 </tbody>
             {% endif %}
