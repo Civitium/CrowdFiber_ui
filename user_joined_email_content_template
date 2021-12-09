@@ -166,6 +166,7 @@
                 <th class="myth"> Zone</th>
                 <th class="myth"> Order ID</th>
                 <th class="myth"> Market</th>
+                <th class="myth"> Progress</th>
             </tr>
         </thead>
         <tbody>
@@ -178,6 +179,7 @@
                 <td class="mytd">{{ Customer.zone_name }}</td>
                 <td class="mytd">{{ Customer.id }}</td>
                 <td class="mytd">{{ Customer.market_name }}</td>
+                <td class="mytd">{{ Customer.zone_progress }}</td>
             </tr>
         </tbody>
     </table>
