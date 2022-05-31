@@ -350,12 +350,7 @@
     {% endif %}
   
    
-    {% if Customer.customer_payments %}
-    	<h3>Customer Payment</h3>
-    	{% for payment in Customer.customer_payments %}
-    		{{ payment.dollar_amount }}
-    	{% endfor %}
-    {% endif %}
+
    <table>
         {% if Customer.order_monthly_total.cents > 0 or Customer.order_install_total.cents > 0 %}
             {% if Campaign.check_if_hide_pricing_on_order_summary_is_false == true%}
@@ -366,6 +361,12 @@
         {% endif %}
 
     <br />
+        {% if Customer.customer_payments %}
+    	  <h3>Customer Payment</h3>
+    	    {% for payment in Customer.customer_payments %}
+    		  {{ payment.dollar_amount }}
+    	    {% endfor %}
+        {% endif %}
     <br />
 
         {% for answer in Customer.answers %}
