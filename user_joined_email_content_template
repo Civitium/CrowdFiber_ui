@@ -416,7 +416,7 @@
                 <td class="mytd">{{ accepted_term.id }}</td>
                 <td class="mytd">{{ accepted_term.title }}</td>
                 <td class="mytd">{{ accepted_term.content }}</td>
-                <td class="mytd">{{ accepted_term.accepted_ip }}</td>
+                <td class="mytd">{{ accepted_term.ip_address }}</td>
                 <td class="mytd">{{ accepted_term.browser }}</td>
                 <td class="mytd">
                     {{ accepted_term.signature_image }}
